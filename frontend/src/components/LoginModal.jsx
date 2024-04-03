@@ -41,7 +41,7 @@ function LoginModal() {
                 onSubmit={handleSubmit}
               >
                 <input
-                  className="border-purple-500 text-center bg-transparent border-2 p-1 rounded"
+                  className="border-purple-500  bg-transparent border-2 p-1 rounded"
                   type="email"
                   placeholder="Email Address"
                   onChange={(e) => {
@@ -49,7 +49,7 @@ function LoginModal() {
                   }}
                 />
                 <input
-                  className="border-purple-500 text-center bg-transparent border-2 p-1 rounded"
+                  className="border-purple-500 bg-transparent border-2 p-1 rounded"
                   type="password"
                   placeholder="Password"
                   onChange={(e) => {

@@ -12,7 +12,7 @@ async function createUser(name, email, password){
     })
 
     if(userAlreadyExists){
-        throw new Error('Email already in use!')
+        throw new Error('Email already in use!');
     }
 
     const user = await prismaClient.user.create({

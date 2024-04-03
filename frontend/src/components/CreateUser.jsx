@@ -18,7 +18,7 @@ function CreateUser() {
       email: yup.string().email('Wrong format!').required('Required Field!'),
       repeatEmail: yup.string()
       .email('Wrong format!')
-      .oneOf([yup.ref('email'), null], 'Email fields does not match!')
+      .oneOf([yup.ref('email'), null], 'Email fields do not match!')
       .required('Required field!')
     }),
     onSubmit: async (values) => {
@@ -81,7 +81,7 @@ function CreateUser() {
           <div className="text-purple-300">{formik.errors.password}</div>
         ) : null}
       <button className="rounded p-3 text-white bg-purple-800 font-semibold hover:bg-purple-700" type="submit">
-        Entrar
+        Create
       </button>
       <a className="text-purple-500 text-center"><Link to='/'>or return home</Link></a>
     </form>

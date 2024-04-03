@@ -11,7 +11,9 @@ const [showModal, setShowModal] = useState(false);
                 <p className="text-xl">A place to place your mind.</p>
                 <p>Create your own dinamic gallery design for your favorite <s>retro</s> games.</p>
                 <button onClick={() => setShowModal(true)} className="bg-purple-900 rounded p-1 border-2 border-purple-900 mr-4 mt-2 hover:bg-transparent">Get Started</button>
-                <button className="bg-transparent p-1 border-purple-900 border-2 rounded">Demo</button>
+                <Link to={"/demo"}>
+                    <button className="bg-transparent p-1 border-purple-900 border-2 rounded">Demo</button>
+                </Link>
             </div>
             {showModal ? (
             <LoginModal />
