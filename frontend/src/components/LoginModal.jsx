@@ -21,6 +21,7 @@ function LoginModal() {
       navigate('/home');
     } catch (error) {
       console.error("Auth error:", error);
+      alert('Account not found!')
     }
   };
   return (

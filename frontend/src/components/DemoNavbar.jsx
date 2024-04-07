@@ -1,10 +1,6 @@
-import ExitModal from "../components/ExitModal.jsx";
-import NewPost from "./NewPost.jsx";
-
-function Navbar(){
+function DemoNavbar(){
     return(
-        <nav className="w-100 flex justify-between p-2 items-center">
-           <NewPost />
+        <nav className="w-100 flex justify-end p-1 items-center">
             <div className="profile flex gap-5 items-center">
                 <div className="profilePicture  bg-white w-10 h-10 rounded-full">
                     <img 
@@ -13,10 +9,9 @@ function Navbar(){
                     className="w-10 h-10 rounded-full"
                     />
                 </div>
-                <ExitModal />
            </div>
         </nav>
     )
 }
 
-export default Navbar;
+export default DemoNavbar;

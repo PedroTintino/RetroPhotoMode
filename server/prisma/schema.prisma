@@ -9,8 +9,8 @@ generator client {
 
 model Image {
   id       String    @id @default(auto()) @map("_id") @db.ObjectId
-  title    String
-  image    String
+  description    String
+  url    String
   author   User      @relation(fields: [authorId], references: [id])
   authorId String    @db.ObjectId
 }
