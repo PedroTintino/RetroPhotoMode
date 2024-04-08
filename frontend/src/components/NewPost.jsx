@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { storage } from "../config/firebase.config";
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { v4 } from 'uuid';
+import axios from 'axios';
 
 function NewPost(){
+const baseUrl = 'http://localhost:3337'
 const [postModal, setPostModal] = useState(false);
 const handleModalOpen = () => {
     setPostModal(!postModal)
@@ -15,8 +17,13 @@ const handleSubmit = (event) => {
     uploadImage();
 }
 
+const handleDescriptionChange = (event) => {
+    setImageDescription(event.target.value);
+}
+
 const [imageUpload, setImageUpload] = useState(null);
-const uploadImage = async (event) => {
+const [imageDescription, setImageDescription] = useState("");
+const uploadImage = async () => {
     if(imageUpload == null){
         alert('select an image!');
         return;
@@ -29,8 +36,12 @@ const uploadImage = async (event) => {
         console.log(imageUrl);
         const postData = {
             url: imageUrl,
-            description:event.target.description.value
+            description:imageDescription
         }
+
+        console.log(postData);
+
+        const response = await axios.post(`${baseUrl}/post/create`, postData)
     }catch(error){
         console.error('Something went wrong!', error);
     }
@@ -52,6 +63,7 @@ const uploadImage = async (event) => {
                       
                       <input 
                         type="text" 
+                        onChange={handleDescriptionChange}
                         name="description" 
                         className="p-4 text-black" 
                         placeholder="Set a description (optional)"/>
