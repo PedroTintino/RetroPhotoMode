@@ -3,8 +3,8 @@ import NewPost from "./NewPost.jsx";
 
 function Navbar(){
     return(
-        <nav className="w-100 flex justify-between p-2 items-center">
-           <NewPost />
+        <nav className="w-100 flex justify-end p-2 items-center">
+        
             <div className="profile flex gap-5 items-center">
                 <div className="profilePicture  bg-white w-10 h-10 rounded-full">
                     <img 
