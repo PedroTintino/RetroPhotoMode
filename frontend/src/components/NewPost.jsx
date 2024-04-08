@@ -5,6 +5,18 @@ import { v4 } from 'uuid';
 import axios from 'axios';
 
 function NewPost(){
+    const parseJwt = (token) => {
+        const base64Url = token.split(".")[1];
+        const base64 = base64Url.replace("-", "+").replace("_", "/");
+        return JSON.parse(atob(base64));
+    };
+
+    const token = localStorage.getItem("token");
+    const tokenDecoded = parseJwt(token);
+    console.log('here is your decoded token: ',tokenDecoded);
+    const authorId = tokenDecoded.id.id;
+    console.log(authorId);
+
 const baseUrl = 'http://localhost:3337'
 const [postModal, setPostModal] = useState(false);
 const handleModalOpen = () => {
@@ -36,12 +48,17 @@ const uploadImage = async () => {
         console.log(imageUrl);
         const postData = {
             url: imageUrl,
-            description:imageDescription
+            description:imageDescription,
+            // alteração feita com sono de madrugada
+            author: authorId
         }
 
         console.log(postData);
 
-        const response = await axios.post(`${baseUrl}/post/create`, postData)
+        const response = await axios.post(`${baseUrl}/post/create`, postData);
+            if(response.status == 200){
+                console.log('Data sent to database!')
+            }
     }catch(error){
         console.error('Something went wrong!', error);
     }
