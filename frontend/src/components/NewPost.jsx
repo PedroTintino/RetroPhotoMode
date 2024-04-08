@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { storage } from "../config/firebase.config";
-import { ref, uploadBytes } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { v4 } from 'uuid';
-import { url } from "inspector";
 
 function NewPost(){
 const [postModal, setPostModal] = useState(false);
 const handleModalOpen = () => {
     setPostModal(!postModal)
-    console.log("Opened")
+
 }
 
 const handleSubmit = (event) => {
@@ -23,15 +22,17 @@ const uploadImage = async (event) => {
         return;
     };
     const imageRef = ref(storage, `users/${imageUpload.name + v4()}`);
-    const uploadedImage = await uploadBytes(imageRef, imageUpload).then(() => {
+    try{
+        await uploadBytes(imageRef, imageUpload)
         alert("Image uploaded!");
-    });
-
-    const imageUrl = await getDownloadURL(uploadedImage);
-
-    const postData = {
-        url: imageUrl,
-        description:event.target.description.value
+        const imageUrl = await getDownloadURL(imageRef);
+        console.log(imageUrl);
+        const postData = {
+            url: imageUrl,
+            description:event.target.description.value
+        }
+    }catch(error){
+        console.error('Something went wrong!', error);
     }
 }
     return(
