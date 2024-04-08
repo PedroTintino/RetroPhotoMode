@@ -40,7 +40,8 @@ const uploadImage = async () => {
         alert('select an image!');
         return;
     };
-    const imageRef = ref(storage, `users/${imageUpload.name + v4()}`);
+    const userName = tokenDecoded.id.name;
+    const imageRef = ref(storage, `users/${userName}/${imageUpload.name + v4()}`);
     try{
         await uploadBytes(imageRef, imageUpload)
         alert("Image uploaded!");
@@ -50,7 +51,7 @@ const uploadImage = async () => {
             url: imageUrl,
             description:imageDescription,
             // alteração feita com sono de madrugada
-            author: authorId
+            authorId: authorId
         }
 
         console.log(postData);

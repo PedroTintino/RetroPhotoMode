@@ -1,6 +1,6 @@
 const prismaClient = require('../index');
 
-async function createPost(url, description, author){
+async function createPost(url, description, authorId){
     if(!url || !description){
         throw new Error('Missing params!');
     }
@@ -10,7 +10,7 @@ async function createPost(url, description, author){
             url,
             description,
             // alteração feita de madrugada com sono
-            author
+            authorId
         }
     })
 
