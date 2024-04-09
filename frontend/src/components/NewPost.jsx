@@ -65,7 +65,7 @@ const uploadImage = async () => {
 }
     return(
         <div>
-            <button onClick={handleModalOpen} className="text-slate-50 font-medium text-center h-12 bg-green-600 rounded p-1">+ New Layout </button>
+            <button onClick={handleModalOpen} className="text-slate-50 font-medium text-center h-12 bg-transparent p-1 transition-all ease-in hover:text-green-300">+ Create </button>
             {postModal && (
                   <div className="modal text-slate-50 w-[400px] h-[320px] rounded flex flex-col gap-5 fixed inset-1 items-center justify-center mx-[auto] my-[auto] bg-gray-700">
                   <div className="overlay w-[100vw] h-[100vh] top-0 left-0 right-0 bottom-0 fixed -z-10 bg-[rgba(49,49,49,0.8)]"></div>

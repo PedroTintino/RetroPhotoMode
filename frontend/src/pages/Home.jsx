@@ -2,10 +2,32 @@ import Navbar from "../components/Navbar";
 import DownArrow from "../assets/icons/down-arrow.svg" 
 import React, {useState, useEffect, useRef} from 'react';
 import NewPost from "../components/NewPost";
+import axios from 'axios';
+import Post from "../components/Post";
 
 function Home(){
 const baseUrl = "http://localhost:3337";
 const [wallpaper, setWallpaper] = useState(null);
+const [images, setImages] = useState([]);
+const [loading, setLoading] = useState(true);
+
+useEffect(() => {
+    const fetchImages = async () => {
+        try{
+            const response = await axios.get(`${baseUrl}/post/list`);
+            console.log(response.data);
+            setImages(response.data);
+            setLoading(false);
+        }
+        catch(error){
+            console.error('Error while loading content: ', error);
+            setLoading(false);
+        }
+    };
+
+    fetchImages();
+}, []);
+
 const handleWallpaperSubmit = (event) => {
     const file = event.target.files[0];
     const imageUrl = URL.createObjectURL(file);
@@ -39,10 +61,10 @@ useEffect(() => {
     fetchUserName();
 }, []);
     return(
-        <div className=" h-screen">
+        <div className="h-96">
              {wallpaper ? (
                   <div
-                  className="bg-cover bg- bg-center w-full h-full absolute top-0 right-0 -z-20"
+                  className="bg-cover bg-fixed bg-center w-full h-full  absolute top-0 right-0 -z-20"
                   style={{ backgroundImage: `url(${wallpaper})` }}
               ></div>
              ) : (
@@ -57,15 +79,18 @@ useEffect(() => {
                 </div>
                 <h4>Welcome to your gallery, <span className="font-semibold">{userName}!</span></h4>
                 <p>Our purpose is giving to all of you the best and unique <br/> experience for your retro and favorite games.</p>
-                <div className="searchAndcreate flex h-12">
-                <input type="text" className="rounded p-2 text-black" placeholder="searchbar coming soon" />
-                <NewPost />
-                </div>
+               
                 <label onClick={handleLabelClick} className="underline text-gray-800 cursor-pointer">Click here to change your home wallpaper</label>
-
                 <input type="file" className="hidden" accept="image/*" ref={fileInputRef} onChange={handleWallpaperSubmit} />
                 <p className="w-10 h-8 "><img src={DownArrow} alt="" /></p>
             </div>
+            {!loading && (
+            <div className="grid bg-black grid-cols-3 gap-4 p-4">
+                {images.map((image) => (
+                    <Post key={image.id} imageUrl={image.url} description={image.description}/>
+                ))}
+            </div>
+        )}
         </div>
     )
 }

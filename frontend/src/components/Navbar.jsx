@@ -3,8 +3,11 @@ import NewPost from "./NewPost.jsx";
 
 function Navbar(){
     return(
-        <nav className="w-100 flex justify-end p-2 items-center">
-        
+        <nav className="w-100 flex justify-between p-2 items-center">
+            <div className="ghostDiv">
+            <NewPost />
+            </div>
+            <input type="text" className="rounded-xl p-2 border-[1px] border-gray-400 text-black" placeholder="search bar coming soon" />
             <div className="profile flex gap-5 items-center">
                 <div className="profilePicture  bg-white w-10 h-10 rounded-full">
                     <img 
