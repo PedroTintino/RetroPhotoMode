@@ -1,7 +1,11 @@
 const prismaClient = require('../index');
 
-async function listPosts(){
-    const posts = await prismaClient.image.findMany();
+async function listPosts(authorId){
+    const posts = await prismaClient.image.findMany({
+        where: {
+            authorId: authorId
+        }
+    });
     return posts;
 }
 

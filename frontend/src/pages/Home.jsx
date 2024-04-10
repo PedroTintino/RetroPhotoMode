@@ -5,6 +5,7 @@ import NewPost from "../components/NewPost";
 import axios from 'axios';
 import Post from "../components/Post";
 
+
 function Home(){
 const baseUrl = "http://localhost:3337";
 const [wallpaper, setWallpaper] = useState(null);
@@ -14,7 +15,15 @@ const [loading, setLoading] = useState(true);
 useEffect(() => {
     const fetchImages = async () => {
         try{
-            const response = await axios.get(`${baseUrl}/post/list`);
+            const token = localStorage.getItem("token");
+            const decodedToken = parseJwt(token);
+            const userId = decodedToken.id.id;
+            console.log(`o userId atual é: ${userId}`);
+            const response = await axios.get(`${baseUrl}/post/list`,{
+                params: {
+                    authorId: userId
+                }
+            });
             console.log(response.data);
             setImages(response.data);
             setLoading(false);
@@ -49,9 +58,7 @@ useEffect(() => {
     const fetchUserName = async () => {
         try{
             const token = localStorage.getItem("token");
-            console.log(token)
             const decodedToken = parseJwt(token);
-            console.log(decodedToken)
             const userName = decodedToken.id.name;
             setUserName(userName)
         }catch(error){
@@ -64,7 +71,7 @@ useEffect(() => {
         <div className="h-96">
              {wallpaper ? (
                   <div
-                  className="bg-cover bg-fixed bg-center w-full h-full  absolute top-0 right-0 -z-20"
+                  className="bg-cover bg-fixed bg-center w-full h-full absolute top-0 right-0 bot -z-20"
                   style={{ backgroundImage: `url(${wallpaper})` }}
               ></div>
              ) : (
@@ -84,8 +91,9 @@ useEffect(() => {
                 <input type="file" className="hidden" accept="image/*" ref={fileInputRef} onChange={handleWallpaperSubmit} />
                 <p className="w-10 h-8 "><img src={DownArrow} alt="" /></p>
             </div>
+         
             {!loading && (
-            <div className="grid bg-black grid-cols-3 gap-4 p-4">
+            <div className="grid bg-transparent grid-cols-3 gap-4 p-4">
                 {images.map((image) => (
                     <Post key={image.id} imageUrl={image.url} description={image.description}/>
                 ))}

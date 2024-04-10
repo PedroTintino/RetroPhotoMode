@@ -7,7 +7,7 @@ function Navbar(){
             <div className="ghostDiv">
             <NewPost />
             </div>
-            <input type="text" className="rounded-xl p-2 border-[1px] border-gray-400 text-black" placeholder="search bar coming soon" />
+            <input type="text" className="rounded-xl p-2 border-[1px] w-[40%] bg-transparent border-gray-200 text-slate-50" placeholder="search bar coming soon" />
             <div className="profile flex gap-5 items-center">
                 <div className="profilePicture  bg-white w-10 h-10 rounded-full">
                     <img 
