@@ -12,30 +12,34 @@ const [wallpaper, setWallpaper] = useState(null);
 const [images, setImages] = useState([]);
 const [loading, setLoading] = useState(true);
 
-useEffect(() => {
-    const fetchImages = async () => {
-        try{
-            const token = localStorage.getItem("token");
-            const decodedToken = parseJwt(token);
-            const userId = decodedToken.id.id;
-            console.log(`o userId atual é: ${userId}`);
-            const response = await axios.get(`${baseUrl}/post/list`,{
-                params: {
-                    authorId: userId
-                }
-            });
-            console.log(response.data);
-            setImages(response.data);
-            setLoading(false);
-        }
-        catch(error){
-            console.error('Error while loading content: ', error);
-            setLoading(false);
-        }
-    };
+const fetchImages = async () => {
+    try{
+        const token = localStorage.getItem("token");
+        const decodedToken = parseJwt(token);
+        const userId = decodedToken.id.id;
+        console.log(`o userId atual é: ${userId}`);
+        const response = await axios.get(`${baseUrl}/post/list`,{
+            params: {
+                authorId: userId
+            }
+        });
+        console.log(response.data);
+        setImages(response.data);
+        setLoading(false);
+    }
+    catch(error){
+        console.error('Error while loading content: ', error);
+        setLoading(false);
+    }
+};
 
+useEffect(() => {
     fetchImages();
 }, []);
+
+const handleNewUpload = () => {
+    fetchImages();
+}
 
 const handleWallpaperSubmit = (event) => {
     const file = event.target.files[0];
@@ -68,17 +72,20 @@ useEffect(() => {
     fetchUserName();
 }, []);
     return(
-        <div className="h-96">
-             {wallpaper ? (
-                  <div
-                  className="bg-cover bg-fixed bg-center w-full h-full absolute top-0 right-0 bot -z-20"
-                  style={{ backgroundImage: `url(${wallpaper})` }}
-              ></div>
-             ) : (
-                <div className="bg-gradient-to-r from-purple-900 to-fuchsia-700 w-full h-full absolute top-0 right-0 -z-20"></div>
-             )}
+    <div>
+        {wallpaper ? (
+            <div
+            className="bg-cover bg-fixed bg-center w-full h-screen absolute top-0 right-0 bot -z-10"
+            style={{ backgroundImage: `url(${wallpaper})` }}
+        ></div>
+       ) : (
+          <div className="bg-gradient-to-r from-purple-900 to-fuchsia-700 w-full h-full absolute top-0 right-0 -z-20"></div>
+       )}
+        <div className="screen block z-50 h-full w-full top-0 left-0 fixed overflow-auto ">
+      
            
-            <Navbar />
+            <Navbar  />
+            <NewPost newUploadMade={handleNewUpload}/>
             <div className="introText text-slate-50 p-6 text-center text-xl h-full flex gap-2 flex-col justify-center leading-9 items-center">
                 <div className="flex items-center">
                     <h2 className="text-4xl font-semibold">RetroView: Photomode</h2>
@@ -93,12 +100,13 @@ useEffect(() => {
             </div>
          
             {!loading && (
-            <div className="grid bg-transparent grid-cols-3 gap-4 p-4">
+            <div className="grid relative grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
                 {images.map((image) => (
                     <Post key={image.id} imageUrl={image.url} description={image.description}/>
                 ))}
             </div>
         )}
+        </div>
         </div>
     )
 }
