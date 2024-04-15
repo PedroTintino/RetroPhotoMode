@@ -4,6 +4,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import NewPost from "../components/NewPost";
 import axios from 'axios';
 import Post from "../components/Post";
+import DinamicGallery from "../components/Grid";
 
 
 function Home(){
@@ -98,14 +99,9 @@ useEffect(() => {
                 <input type="file" className="hidden" accept="image/*" ref={fileInputRef} onChange={handleWallpaperSubmit} />
                 <p className="w-10 h-8 "><img src={DownArrow} alt="" /></p>
             </div>
-         
-            {!loading && (
-            <div className="grid relative grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
-                {images.map((image) => (
-                    <Post key={image.id} imageUrl={image.url} description={image.description}/>
-                ))}
-            </div>
-        )}
+            {!loading && (     
+                <DinamicGallery images={images} />
+            )}
         </div>
         </div>
     )
