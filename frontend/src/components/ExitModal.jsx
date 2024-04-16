@@ -15,10 +15,10 @@ function ExitModal() {
     navigate("/");
   }
   return (
-    <div onClick={toggleModal} className="exitModalBtn">
-      <div className="flex flex-col items-center cursor-pointer">
+    <div onClick={toggleModal} className="exitModalBtn ">
+      <div className="flex  items-center cursor-pointer">
         <img src={LogoutIcon} alt="Um ícone de saída" className="w-6 h-6" />
-        <span className="text-slate-50 font-medium">Log out</span>
+        <span className="text-slate-900 font-medium">Log out</span>
       </div>
  {exitModal && (
      <div className="modal w-[400px] h-[200px] rounded flex fixed inset-1 items-center justify-center mx-[auto] my-[auto] bg-gray-700">

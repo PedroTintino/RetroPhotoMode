@@ -9,7 +9,7 @@ export default function DinamicGallery({ images }) {
       <ImageList variant="masonry" cols={3} gap={10}>
         {images.map((image) => (
           <ImageListItem key={image.id}>
-            <article className="bg-slate-950 rounded-sm overflow-hidden shadow-md p-6 text-gray-400 font-normal text-lg">
+            <article className="bg-transparent border-[#e6e6e6] border-2 rounded-sm overflow-hidden shadow-md p-6 text-slate-50 font-semibold text-xl">
             <img
               src={image.url}
               alt={image.description}

@@ -72,6 +72,15 @@ useEffect(() => {
     }
     fetchUserName();
 }, []);
+
+const handleSearch = (query) => {
+    // if(query.trim() ==='') setImages(images); Doesn't work
+    const filteredPosts = images.filter((image) =>
+      image.description.toLowerCase().includes(query.toLowerCase())
+    );
+    setImages(filteredPosts);
+  };
+  
     return(
     <div>
         {wallpaper ? (
@@ -85,7 +94,7 @@ useEffect(() => {
         <div className="screen block z-50 h-full w-full top-0 left-0 fixed overflow-auto ">
       
            
-            <Navbar  />
+            <Navbar  handleSearch={handleSearch}/>
             <NewPost newUploadMade={handleNewUpload}/>
             <div className="introText text-slate-50 p-6 text-center text-xl h-full flex gap-2 flex-col justify-center leading-9 items-center">
                 <div className="flex items-center">
