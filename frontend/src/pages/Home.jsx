@@ -7,11 +7,14 @@ import Post from "../components/Post";
 import DinamicGallery from "../components/Grid";
 
 
+
 function Home(){
 const baseUrl = "http://localhost:3337";
 const [wallpaper, setWallpaper] = useState(null);
 const [images, setImages] = useState([]);
 const [loading, setLoading] = useState(true);
+const [reload, setReload] = useState(false);
+
 
 const fetchImages = async () => {
     try{
@@ -37,7 +40,13 @@ const fetchImages = async () => {
 useEffect(() => {
     fetchImages();
 }, []);
-
+// Um gatilho para recarregamento
+useEffect(() =>{
+    if(reload){
+        fetchImages();
+        setReload(false);
+    }
+}, [reload])
 const handleNewUpload = () => {
     fetchImages();
 }
@@ -72,7 +81,7 @@ useEffect(() => {
     }
     fetchUserName();
 }, []);
-
+// SEARCH
 const handleSearch = (query) => {
     // if(query.trim() ==='') setImages(images); Doesn't work
     const filteredPosts = images.filter((image) =>
@@ -80,6 +89,19 @@ const handleSearch = (query) => {
     );
     setImages(filteredPosts);
   };
+// DELETE
+const handleDelete = async (postId) => {
+    try{
+      await axios.delete(`${baseUrl}/post/delete/${postId}`);
+  
+      setImages((prevImages) => prevImages.filter((image) => image.id !== postId))
+      alert('Post deleted!')
+      setReload(true);
+    }
+    catch(error){
+        console.log('Error while deleting: ', error);
+    }
+  }
   
     return(
     <div>
@@ -109,7 +131,7 @@ const handleSearch = (query) => {
                 <p className="w-10 h-8 "><img src={DownArrow} alt="" /></p>
             </div>
             {!loading && (     
-                <DinamicGallery images={images} />
+                <DinamicGallery images={images} handleDelete={handleDelete} />
             )}
         </div>
         </div>

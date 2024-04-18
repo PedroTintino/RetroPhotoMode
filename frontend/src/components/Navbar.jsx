@@ -31,7 +31,7 @@ function Navbar({ handleSearch }){
                 onChange={handleInputChange}
                 type="text" 
                 className="rounded-xl w-[100%] p-2 border-[1px] bg-gray-50 border-gray-200 text-black" 
-                placeholder="search bar coming soon" 
+                placeholder="search...(feature may have some bugs)" 
                 />
                 </form>
             <div className="profile flex gap-5 items-center">
