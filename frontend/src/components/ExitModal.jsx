@@ -10,6 +10,7 @@ function ExitModal() {
   };
   const logOut = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("wallpaper");
     const token = localStorage.getItem("token");
     console.log(token);
     navigate("/");

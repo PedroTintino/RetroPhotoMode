@@ -54,8 +54,18 @@ const handleNewUpload = () => {
 const handleWallpaperSubmit = (event) => {
     const file = event.target.files[0];
     const imageUrl = URL.createObjectURL(file);
+    localStorage.setItem('wallpaper',imageUrl);
     setWallpaper(imageUrl);
 }
+// gatilho pro wallpaper
+useEffect(() => {
+    const savedWallpaper = localStorage.getItem('wallpaper');
+    // if(savedWallpaper){
+    //     setWallpaper(savedWallpaper);
+    // }
+    setWallpaper(savedWallpaper);
+}, []);
+
 
 const fileInputRef = useRef(null);
 const handleLabelClick = () => {
