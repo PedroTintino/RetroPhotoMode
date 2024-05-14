@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import axios from "axios";
 
 function LoginModal() {
@@ -8,7 +9,6 @@ function LoginModal() {
   const [password, setPassword] = useState("");
   const baseUrl = "http://localhost:3337";
   const handleSubmit = async (e) => {
-    console.log("hello");
     e.preventDefault();
     try {
       const response = await axios.post(`${baseUrl}/login`, {
@@ -21,7 +21,7 @@ function LoginModal() {
       navigate('/home');
     } catch (error) {
       console.error("Auth error:", error);
-      alert('Account not found!')
+      toast.error('Account not found!');
     }
   };
   return (
